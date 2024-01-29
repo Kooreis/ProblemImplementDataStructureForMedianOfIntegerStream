@@ -1,13 +1,4 @@
-class MinHeap {
-    constructor() {
-        this.heap = [];
-    }
-
-    insert(num) {
-        this.heap.push(num);
-        this.bubbleUp();
-    }
-
+class MaxHeap extends MinHeap {
     bubbleUp() {
         let index = this.heap.length - 1;
         while (index > 0) {
@@ -15,18 +6,11 @@ class MinHeap {
                 parentIndex = Math.floor((index - 1) / 2),
                 parent = this.heap[parentIndex];
 
-            if (parent >= element) break;
+            if (parent <= element) break;
             this.heap[index] = parent;
             this.heap[parentIndex] = element;
             index = parentIndex;
         }
-    }
-
-    extractMin() {
-        const min = this.heap[0];
-        this.heap[0] = this.heap.pop();
-        this.sinkDown();
-        return min;
     }
 
     sinkDown() {
@@ -42,12 +26,12 @@ class MinHeap {
 
             if (leftChildIdx < length) {
                 leftChild = this.heap[leftChildIdx];
-                if (leftChild < element) swap = leftChildIdx;
+                if (leftChild > element) swap = leftChildIdx;
             }
 
             if (rightChildIdx < length) {
                 rightChild = this.heap[rightChildIdx];
-                if ((swap !== null && rightChild < leftChild) || (swap === null && rightChild < element)) {
+                if ((swap !== null && rightChild > leftChild) || (swap === null && rightChild > element)) {
                     swap = rightChildIdx;
                 }
             }
